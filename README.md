@@ -41,6 +41,26 @@ Default server URL: `http://localhost:8080`
 ## API
 Base path: `/api/auth`
 
+### Endpoint Flow Diagram
+```mermaid
+flowchart TD
+    C[Client / ordernest-web]
+    DB[(PostgreSQL)]
+
+    subgraph AUTH[ordernest-auth-service - /api/auth]
+      R["POST /register<br/>Public<br/>Req: RegisterRequest<br/>Res: 201 MessageResponse"]
+      L["POST /login<br/>Public<br/>Req: LoginRequest<br/>Res: 200 AuthResponse (JWT)"]
+      M["GET /me<br/>Protected (Bearer JWT)<br/>Res: 200 UserInfoResponse"]
+    end
+
+    C --> R
+    C --> L
+    C -->|"Authorization: Bearer &lt;jwt&gt;"| M
+    R -->|"Create user (INSERT)"| DB
+    L -->|"Validate user (SELECT)"| DB
+    M -->|"Fetch current user (SELECT)"| DB
+```
+
 ### 1) Register User
 - Method: `POST`
 - URL: `/api/auth/register`
