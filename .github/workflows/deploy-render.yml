@@ -5,7 +5,18 @@ on:
     branches:
       - main
       - master
+    paths:
+      - 'src/**'
+      - 'gradle/**'
+      - 'build.gradle'
+      - 'settings.gradle'
+      - 'Dockerfile'
+      - '.github/workflows/deploy-render.yml'
   workflow_dispatch:
+
+concurrency:
+  group: deploy-render-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   deploy:
