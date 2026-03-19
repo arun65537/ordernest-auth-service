@@ -47,7 +47,7 @@ flowchart TD
     C[Client / ordernest-web]
     DB[(PostgreSQL)]
 
-    subgraph AUTH[ordernest-auth-service - /api/auth]
+subgraph AUTH[sso-service - /api/auth]
       R["POST /register<br/>Public<br/>Req: RegisterRequest<br/>Res: 201 MessageResponse"]
       L["POST /login<br/>Public<br/>Req: LoginRequest<br/>Res: 200 AuthResponse (JWT)"]
       M["GET /me<br/>Protected (Bearer JWT)<br/>Res: 200 UserInfoResponse"]
